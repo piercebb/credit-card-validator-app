@@ -4,9 +4,13 @@ App to validate credit card numbers using the [Lunhn algorithm](https://en.wikip
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Start Up
+## Run the Application
 
-In the project directory, you can run:
+To run the project use the following commands:
+
+### `npm init`
+
+Initilizes the project and install application packages.
 
 ### `npm start`
 
