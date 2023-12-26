@@ -37,7 +37,7 @@ export const isValidLuhn = (num: string): boolean => {
     .reduce((sum, val) => {
       return (sum += val);
     });
-  return 10 - (sum % 10) == checksum;
+  return 10 - (sum % 10) === checksum;
 };
 
 function App() {
