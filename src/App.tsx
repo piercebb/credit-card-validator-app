@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 import {
   Box,
   Button,
@@ -15,41 +15,50 @@ import { CheckCircleIcon, EditIcon, NotAllowedIcon } from '@chakra-ui/icons';
 import theme from './theme';
 import './App.css';
 
+export const isValidLuhn = (num: string): boolean => {
+  let numbers = Array.from(num, Number);
+  let checksum = numbers[numbers.length - 1];
+  if (numbers.includes(NaN) || numbers.length === 0) {
+    return false;
+  }
+  let sum = numbers
+    .reverse()
+    .slice(1)
+    .map((num, i) => {
+      let val = num;
+      if (!(i % 2)) {
+        val = num * 2;
+        if (val > 9) {
+          val = Number(String(val)[0]) + Number(String(val)[1]);
+        }
+      }
+      return val;
+    })
+    .reduce((sum, val) => {
+      return (sum += val);
+    });
+  return 10 - (sum % 10) == checksum;
+};
+
 function App() {
   const [cardNumber, setCardNumber] = useState<string>('');
   const [cardState, setCardState] = useState<boolean | undefined>(undefined);
 
-  const computeLuhnAlgorithm = (num: string): boolean => {
-    let numbers = Array.from(num, Number);
-    if (numbers.includes(NaN)) {
-      return false;
-    }
-    let sum = numbers
-      .map((num, i) => {
-        let val = num;
-        if (!(i % 2)) {
-          val = num * 2;
-          if (val > 9) {
-            val = Number(String(val)[0]) + Number(String(val)[1]);
-          }
-        }
-        return val;
-      })
-      .reduce((sum, val) => {
-        return (sum += val);
-      });
-    return !(sum % 10);
-  };
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setCardState(undefined);
-    if (cardNumber && computeLuhnAlgorithm(cardNumber)) {
+    if (cardNumber && isValidLuhn(cardNumber)) {
       setCardState(true);
     } else {
       setCardState(false);
     }
   };
+
+  useEffect(() => {
+    if (cardNumber === '') {
+      setCardState(undefined);
+    }
+  }, [cardNumber]);
 
   return (
     <ChakraProvider theme={theme}>
@@ -91,7 +100,12 @@ function App() {
                 />
               </InputRightElement>
             </InputGroup>
-            <Button data-testid='validate-submit' type='submit' m={5}>
+            <Button
+              data-testid='validate-submit'
+              type='submit'
+              m={5}
+              isDisabled={cardNumber === ''}
+            >
               Validate
             </Button>
           </form>
