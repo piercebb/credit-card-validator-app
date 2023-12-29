@@ -5,7 +5,7 @@ import {
   type ThemeConfig,
 } from '@chakra-ui/react';
 
-import { inputTheme } from './components/inputTheme';
+import { inputTheme } from './components/CardInput/inputTheme';
 
 const config: ThemeConfig = {
   initialColorMode: 'light',
