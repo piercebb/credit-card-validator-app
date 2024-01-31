@@ -32,7 +32,7 @@ export const CardInput = (): JSX.Element => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length > 19) {
+    if (e.target.value.length > 30) {
       return false;
     }
     setCardNumber(e.target.value);

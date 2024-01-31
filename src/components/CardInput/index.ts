@@ -1,8 +1,9 @@
 export const isValidLuhn = (num: string): boolean => {
-  let numbers = Array.from(num, Number);
-  if (numbers.includes(NaN) || numbers.length === 0) {
+  let sanitizedNum = num.replaceAll(/\D/g, '');
+  if (sanitizedNum === null || sanitizedNum.length === 0) {
     return false;
   }
+  let numbers = Array.from(sanitizedNum, Number);
   let checksum = numbers[numbers.length - 1];
   let sum = numbers
     .reverse()
