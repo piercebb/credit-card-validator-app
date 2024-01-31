@@ -1,4 +1,4 @@
-import { isValidLuhn } from '../../components/CardInput/index';
+import { isValidLuhn } from './index';
 
 test('isValidLuhn validates non-numeric strings', () => {
   const invalid_string = 'foobar';
